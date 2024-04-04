@@ -38,10 +38,11 @@ pub mod game {
         
         }
     }
+    
 
     mod initial_message_game{
 
-        pub fn display_introduction() {        
+            pub fn display_introduction() {        
             println!("\nWelcome to the tic tac toe game !");
             println!("Player 1, you are the 'X', and player 2, you are the 'O'. Enjoy the game !\n");
 
@@ -57,6 +58,18 @@ pub mod game {
 
     pub fn switch_player(player_one_turn: bool) -> bool {
         return !player_one_turn;
+    }
+
+    pub fn game_is_tie(board: [[char; 3]; 3]) -> bool {
+
+        for i in 0..3 {
+            for j in 0..3 {
+                if board[i][j] == ' ' {
+                    return false;
+                }
+            }
+        } 
+        return true;
     }
 
     pub fn start_game(){
@@ -99,11 +112,13 @@ pub mod game {
             else {
                 println!("You can not choose this position!");
             }
-            end_game = false;
+            
+            end_game = game_is_tie(board);
             
             print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
 
         }
-    }
 
+        print!("End game!");
+    }
 }
