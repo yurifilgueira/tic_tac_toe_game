@@ -21,7 +21,7 @@ pub mod game {
             }
         }
 
-        pub fn is_position_free(board: [[char; 3]; 3], position: i32) -> bool {
+        pub fn is_position_free(board: &[[char; 3]; 3], position: i32) -> bool {
 
             match position{
                 1 => if board[0][0] == ' ' {true} else {false},
@@ -34,8 +34,7 @@ pub mod game {
                 8 => if board[2][1] == ' ' {true} else {false},
                 9 => if board[2][2] == ' ' {true} else {false},
                 _ => false,
-            }
-        
+            } 
         }
     }
     
@@ -60,7 +59,7 @@ pub mod game {
         return !player_one_turn;
     }
 
-    pub fn game_is_tie(board: [[char; 3]; 3]) -> bool {
+        pub fn game_is_tie(board: [[char; 3]; 3]) -> bool {
 
         for i in 0..3 {
             for j in 0..3 {
@@ -70,6 +69,42 @@ pub mod game {
             }
         } 
         return true;
+    }
+
+    pub fn verify_win(board: &[[char; 3]; 3], player_character: &char) -> bool { 
+        
+        if board[0][0] == board[1][1] && board[2][2] == *player_character{
+            return true;
+        }
+        else {
+            
+            let mut count_row = 0;
+            let mut count_column = 0;
+
+            for i in 0..3 {
+                for j in 0..3 {
+
+                    if board[i][j] == *player_character {
+                        count_row = count_row + 1;
+                    }
+
+                    if board[j][i] == *player_character {
+                        count_column = count_column + 1;
+                    }
+                }
+
+                if count_row == 3 || count_column == 3 {
+                    return true;
+                }
+                else {
+                    count_row = 0;
+                    count_column = 0;
+                }
+
+            }           
+        }
+
+        return false;
     }
 
     pub fn start_game(){
@@ -105,8 +140,23 @@ pub mod game {
                 }
             };
 
-            if position::is_position_free(board, position) {
+            if position::is_position_free(&board, position) {
                 position::calculate_position(&mut board, position, player_one_turn);
+                
+                let player_character;
+                
+                if player_one_turn {
+                    player_character = 'X';
+                }
+                else {
+                    player_character = 'O';
+                }
+                
+                if verify_win(&board, &player_character) {
+                    println!("Some player wins!");
+                    break;
+                }
+                
                 player_one_turn = switch_player(player_one_turn);
             }
             else {
@@ -114,8 +164,8 @@ pub mod game {
             }
             
             end_game = game_is_tie(board);
-            
-            print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
+
+            // print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
 
         }
 
