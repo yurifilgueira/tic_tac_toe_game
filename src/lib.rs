@@ -176,11 +176,7 @@ pub mod game {
             else {
                 println!("You can not choose this position!");
             }
-
-            // print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
-
         }
-
         println!("End game!");
     }
 }
