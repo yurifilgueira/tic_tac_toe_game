@@ -51,6 +51,8 @@ pub mod game {
             println!("               4 | 5 | 6");
             println!("              -----------");
             println!("               7 | 8 | 9\n");
+
+            println!("\n           --- 1, 2, 3 GO! ---\n");
         }
         
     }
@@ -73,9 +75,12 @@ pub mod game {
 
     pub fn verify_win(board: &[[char; 3]; 3], player_character: &char) -> bool { 
         
-        if board[0][0] == board[1][1] && board[2][2] == *player_character{
+        if board[0][0] == board[1][1] && board[2][2] == board[0][0] {
             return true;
         }
+        else if board[0][2] == board[1][1] && board[2][0] == board[0][0] {
+            return true;
+        } 
         else {
             
             let mut count_row = 0;
@@ -107,6 +112,14 @@ pub mod game {
         return false;
     }
 
+    pub fn display_board(board: &[[char; 3]; 3]) {
+        println!("               {} | {} | {}", board[0][0], board[0][1], board[0][2]);
+        println!("              -----------");
+        println!("               {} | {} | {}", board[1][0], board[1][1], board[1][2]);
+        println!("              -----------");
+        println!("               {} | {} | {}", board[2][0], board[2][1], board[2][2]);
+    }
+
     pub fn start_game(){
         let mut board: [[char; 3]; 3] = [[' '; 3]; 3];
         let mut end_game: bool = false;
@@ -114,18 +127,11 @@ pub mod game {
 
         initial_message_game::display_introduction();
 
-        println!("\n           --- 1, 2, 3 GO! ---\n");
-
         while !end_game {
 
             if player_one_turn {println!("          --- Player 1 turn ---\n")} else {println!("          --- Player 2 turn ---\n")};
 
-            println!("               {} | {} | {}", board[0][0], board[0][1], board[0][2]);
-            println!("              -----------");
-            println!("               {} | {} | {}", board[1][0], board[1][1], board[1][2]);
-            println!("              -----------");
-            println!("               {} | {} | {}", board[2][0], board[2][1], board[2][2]);
-
+            display_board(&board);
             print!("\nInsert the position that you want: ");
             let _ = io::stdout().flush();
             
@@ -153,6 +159,7 @@ pub mod game {
                 }
                 
                 if verify_win(&board, &player_character) {
+                    display_board(&board);
                     println!("Some player wins!");
                     break;
                 }
