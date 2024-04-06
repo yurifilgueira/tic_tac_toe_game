@@ -160,7 +160,10 @@ pub mod game {
                 
                 if verify_win(&board, &player_character) {
                     display_board(&board);
-                    println!("Some player wins!");
+
+                    if player_one_turn {println!("Player one wins!");}
+                    else {println!("Player two wins!");}  
+                    
                     break;
                 }
                 
