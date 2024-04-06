@@ -61,7 +61,7 @@ pub mod game {
         return !player_one_turn;
     }
 
-        pub fn game_is_tie(board: [[char; 3]; 3]) -> bool {
+        pub fn game_is_tie(board: &[[char; 3]; 3]) -> bool {
 
         for i in 0..3 {
             for j in 0..3 {
@@ -122,12 +122,11 @@ pub mod game {
 
     pub fn start_game(){
         let mut board: [[char; 3]; 3] = [[' '; 3]; 3];
-        let mut end_game: bool = false;
         let mut player_one_turn: bool = true;
 
         initial_message_game::display_introduction();
 
-        while !end_game {
+        loop {
 
             if player_one_turn {println!("          --- Player 1 turn ---\n")} else {println!("          --- Player 2 turn ---\n")};
 
@@ -159,21 +158,24 @@ pub mod game {
                 }
                 
                 if verify_win(&board, &player_character) {
-                    display_board(&board);
+                   display_board(&board);
 
                     if player_one_turn {println!("Player one wins!");}
                     else {println!("Player two wins!");}  
                     
                     break;
                 }
-                
+                else if game_is_tie(&board) {
+                    display_board(&board);
+                    println!("The game tied!");
+                    break;
+                }
+
                 player_one_turn = switch_player(player_one_turn);
             }
             else {
                 println!("You can not choose this position!");
             }
-            
-            end_game = game_is_tie(board);
 
             // print!("{esc}[2J{esc}[1;1H", esc = 27 as char);
 
