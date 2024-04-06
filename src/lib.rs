@@ -75,10 +75,10 @@ pub mod game {
 
     pub fn verify_win(board: &[[char; 3]; 3], player_character: &char) -> bool { 
         
-        if board[0][0] == board[1][1] && board[2][2] == board[0][0] {
+        if board[0][0] == board[1][1] && board[2][2] == board[0][0] && board[0][0] != ' ' {
             return true;
         }
-        else if board[0][2] == board[1][1] && board[2][0] == board[0][0] {
+        else if board[0][2] == board[1][1] && board[2][0] == board[0][2] && board[0][2] != ' ' {
             return true;
         } 
         else {
@@ -176,6 +176,6 @@ pub mod game {
 
         }
 
-        print!("End game!");
+        println!("End game!");
     }
 }
