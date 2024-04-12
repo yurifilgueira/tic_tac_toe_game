@@ -17,7 +17,7 @@ pub mod game {
                 7 => board[2][0] = identifier,
                 8 => board[2][1] = identifier,
                 9 => board[2][2] = identifier,
-                _ => print!("Input error"),
+                _ => print!("Input error!"),
             }
         }
 
@@ -42,8 +42,8 @@ pub mod game {
     mod initial_message_game{
 
             pub fn display_introduction() {        
-            println!("\nWelcome to the tic tac toe game !");
-            println!("Player 1, you are the 'X', and player 2, you are the 'O'. Enjoy the game !\n");
+            println!("\nWelcome to the tic tac toe game!");
+            println!("Player 1, you are the 'X', and player 2, you are the 'O'. Enjoy the game!\n");
 
             println!("Choose a number between 1 and 9 to define the position you want. See the corresponding number to the position below:");
             println!("               1 | 2 | 3");
@@ -140,7 +140,7 @@ pub mod game {
             let position: i32 = match position.trim().parse::<i32>() {
                 Ok(numb) => {numb},
                 Err(_) => {
-                    println!("Invalid input.");
+                    println!("Invalid input!");
                     continue;
                 }
             };
